@@ -570,11 +570,11 @@ const STORAGE_KEY = 'feedback-form-state';
 const formData = {};
 const refs = {
   form: document.querySelector('.feedback-form'),
+  input: document.querySelector('.feedback-form input'),
   textarea: document.querySelector('.feedback-form textarea')
 };
 refs.form.addEventListener('submit', onFormSubmit);
 refs.form.addEventListener('input', (0, _lodash.default)(onInput, 500));
-populateTextarea();
 
 function onInput(evt) {
   formData[evt.target.name] = evt.target.value;
@@ -583,19 +583,23 @@ function onInput(evt) {
 
 ;
 
+const populateInput = () => {
+  const currentInputValues = localStorage.getItem(STORAGE_KEY);
+
+  if (currentInputValues) {
+    const parsedInputValues = JSON.parse(currentInputValues);
+    refs.input.value = parsedInputValues["email"];
+    refs.textarea.value = parsedInputValues["message"];
+  }
+};
+
+populateInput();
+
 function onFormSubmit(evt) {
   evt.preventDefault();
   evt.currentTarget.reset();
   localStorage.removeItem(STORAGE_KEY);
   console.log(formData);
-}
-
-function populateTextarea() {
-  const savedMessage = localStorage.getItem(STORAGE_KEY);
-
-  if (savedMessage) {
-    refs.textarea.value = savedMessage;
-  }
 }
 },{"lodash.throttle":"../node_modules/lodash.throttle/index.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
